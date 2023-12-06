@@ -1,4 +1,4 @@
-# sinus_mpm_app
+# sinus_mpm_application
 
 A new Flutter project.
 

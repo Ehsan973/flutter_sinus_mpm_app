@@ -1,6 +1,6 @@
 {
-    "name": "sinus_mpm_app",
-    "short_name": "sinus_mpm_app",
+    "name": "sinus_mpm_application",
+    "short_name": "sinus_mpm_application",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
