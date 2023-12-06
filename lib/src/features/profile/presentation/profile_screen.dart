@@ -38,8 +38,8 @@ class ProfileScreen extends StatelessWidget {
                   },
                 ));
               },
-              trailing: Text("لیست تراکنش ها"),
-              leading: Icon(Icons.list),
+              trailing: const Text("لیست تراکنش ها"),
+              leading: const Icon(Icons.list),
             ),
             ListTile(
               onTap: () {
@@ -51,7 +51,22 @@ class ProfileScreen extends StatelessWidget {
               },
               trailing: const Text("افزایش موجودی"),
               leading: const Icon(Icons.add),
-            )
+            ),
+            const Spacer(),
+            ListTile(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) {
+                    return const AddWalletScreen();
+                  },
+                ));
+              },
+              trailing: const Text("خروج از حسا کابری"),
+              leading: const Icon(Icons.logout),
+            ),
+            const SizedBox(
+              height: 150,
+            ),
           ],
         ),
       ),
