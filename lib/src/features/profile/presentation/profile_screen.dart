@@ -1,7 +1,9 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:sinus_mpm_application/src/features/profile/presentation/add_wallet_screen.dart';
 import 'package:sinus_mpm_application/src/features/profile/presentation/transactions_list_screen.dart';
 
+@RoutePage()
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
