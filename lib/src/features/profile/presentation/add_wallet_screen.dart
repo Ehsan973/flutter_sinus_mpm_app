@@ -11,10 +11,10 @@ class _AddWalletScreenState extends State<AddWalletScreen> {
   int selectedValue = 0;
 
   final List<String> items = [
-    '35',
-    '100',
     '25',
+    '35',
     '45',
+    '100',
   ];
 
   @override
