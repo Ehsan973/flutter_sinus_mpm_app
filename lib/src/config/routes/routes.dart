@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:sinus_mpm_application/src/config/routes/controller/auth_guard.dart';
 import 'package:sinus_mpm_application/src/features/authentication/presentation/login_screen.dart';
 import 'package:sinus_mpm_application/src/features/authentication/presentation/sign_up_screen.dart';
 import 'package:sinus_mpm_application/src/features/create_pool/presentation/create_pool_screen.dart';
@@ -17,28 +18,34 @@ class AppRouter extends _$AppRouter {
   List<AutoRoute> get routes => [
         /// mainScreen
         AutoRoute(
-          initial: true,
-          
           path: '/',
+          guards: [AuthGuard()],
+          initial: true,
           page: RootRoute.page,
           children: [
             AutoRoute(
-              
               path: 'create_pool',
               page: CreatePoolRoute.page,
-              initial: true,
+              initial: false,
             ),
             AutoRoute(
               path: 'join_pool',
               page: JoinPoolRoute.page,
             ),
             AutoRoute(
+              initial: true,
               path: 'profile',
               page: ProfileRoute.page,
             ),
           ],
         ),
-        AutoRoute(path: '/login', page: LoginRoute.page),
-        AutoRoute(path: '/sign_up', page: LoginRoute.page),
+        AutoRoute(
+          path: '/login',
+          page: LoginRoute.page,
+        ),
+        AutoRoute(
+          path: '/sign_up',
+          page: SignUpRoute.page,
+        ),
       ];
 }

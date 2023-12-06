@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sinus_mpm_application/src/config/constants/constants.dart';
 
 class FormTextField extends StatelessWidget {
-  const FormTextField({super.key, required this.text});
+  const FormTextField(
+      {super.key, required this.text, required this.controller});
   final String text;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +14,7 @@ class FormTextField extends StatelessWidget {
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: TextField(
+          controller: controller,
           decoration: InputDecoration(
             border: InputBorder.none,
             label: Text(

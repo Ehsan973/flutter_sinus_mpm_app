@@ -9,7 +9,7 @@ import 'package:sinus_mpm_application/src/features/authentication/data/auth_md.d
 class AuthProvider extends ChangeNotifier {
   // Future<bool> get isLoggedIn async =>
   //     locator.get<SharedPreferences>().containsKey(accessTokenKey);
-  bool _isLoggedIn = true;
+  bool _isLoggedIn = false;
 
   bool get isLoggedIn => _isLoggedIn;
 
