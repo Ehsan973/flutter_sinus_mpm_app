@@ -1,10 +1,14 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:sinus_mpm_application/src/config/constants/constants.dart';
 import 'package:sinus_mpm_application/src/features/authentication/presentation/sign_up_screen.dart';
 import 'package:sinus_mpm_application/src/features/authentication/widget/form_text_field.dart';
 
+@RoutePage()
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final Function(bool didLogin) onResult;
+
+  const LoginScreen({super.key, required this.onResult});
 
   @override
   Widget build(BuildContext context) {

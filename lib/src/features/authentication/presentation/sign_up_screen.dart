@@ -1,8 +1,11 @@
+import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:sinus_mpm_application/src/config/constants/constants.dart';
 import 'package:sinus_mpm_application/src/features/authentication/presentation/login_screen.dart';
 import 'package:sinus_mpm_application/src/features/authentication/widget/form_text_field.dart';
 
+@RoutePage()
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
@@ -76,7 +79,6 @@ class SignUpScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
+      ));
   }
 }
