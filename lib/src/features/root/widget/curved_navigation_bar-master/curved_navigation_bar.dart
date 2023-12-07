@@ -61,7 +61,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
       setState(() {
         _pos = _animationController.value;
         final endingPos = _endingIndex / widget.items.length;
-         
+
         if ((endingPos - _pos).abs() < (_startingPos - _pos).abs()) {
           _icon = widget.items[_endingIndex];
         }
@@ -98,7 +98,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
         alignment: Alignment.bottomCenter,
         children: <Widget>[
           Positioned(
-            bottom: 0,
+            bottom: 10,
             left: Directionality.of(context) == TextDirection.rtl
                 ? null
                 : _pos * size.width,
@@ -137,7 +137,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
             right: 0,
             bottom: 0 - (75.0 - widget.height),
             child: SizedBox(
-                height: 100.0,
+                height: 100,
                 child: Row(
                     children: widget.items.map((item) {
                   return NavButton(

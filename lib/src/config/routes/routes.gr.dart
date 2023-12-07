@@ -15,12 +15,6 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    AddWalletRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const AddWalletScreen(),
-      );
-    },
     CreatePoolRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -56,6 +50,7 @@ abstract class _$AppRouter extends RootStackRouter {
         child: QRViewScreen(
           key: args.key,
           afterCompleteScan: args.afterCompleteScan,
+          isForJoin: args.isForJoin,
         ),
       );
     },
@@ -78,20 +73,6 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
-}
-
-/// generated route for
-/// [AddWalletScreen]
-class AddWalletRoute extends PageRouteInfo<void> {
-  const AddWalletRoute({List<PageRouteInfo>? children})
-      : super(
-          AddWalletRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'AddWalletRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -179,12 +160,14 @@ class QRViewRoute extends PageRouteInfo<QRViewRouteArgs> {
   QRViewRoute({
     Key? key,
     required dynamic Function(Barcode) afterCompleteScan,
+    bool isForJoin = false,
     List<PageRouteInfo>? children,
   }) : super(
           QRViewRoute.name,
           args: QRViewRouteArgs(
             key: key,
             afterCompleteScan: afterCompleteScan,
+            isForJoin: isForJoin,
           ),
           initialChildren: children,
         );
@@ -198,15 +181,18 @@ class QRViewRouteArgs {
   const QRViewRouteArgs({
     this.key,
     required this.afterCompleteScan,
+    this.isForJoin = false,
   });
 
   final Key? key;
 
   final dynamic Function(Barcode) afterCompleteScan;
 
+  final bool isForJoin;
+
   @override
   String toString() {
-    return 'QRViewRouteArgs{key: $key, afterCompleteScan: $afterCompleteScan}';
+    return 'QRViewRouteArgs{key: $key, afterCompleteScan: $afterCompleteScan, isForJoin: $isForJoin}';
   }
 }
 

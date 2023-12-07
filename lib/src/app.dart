@@ -6,8 +6,8 @@ import 'package:sinus_mpm_application/src/config/get_it/get_it.dart';
 import 'package:sinus_mpm_application/src/config/routes/controller/auth_provider.dart';
 import 'package:sinus_mpm_application/src/config/routes/routes.dart';
 import 'package:sinus_mpm_application/src/config/utils/logger.dart';
-import 'package:sinus_mpm_application/src/config/utils/messages.dart';
 import 'package:sinus_mpm_application/src/features/create_pool/cubit/create_pool_cubit.dart';
+import 'package:sinus_mpm_application/src/features/join_pool/cubit/join_cubit.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -27,14 +27,28 @@ class _AppState extends State<App> with TickerProviderStateMixin {
       providers: [
         BlocProvider<CreatePoolCubit>(
           create: (context) => CreatePoolCubit(locator.get())
-            ..stream.forEach((element) {
-              if (element is CreatePoolInitial) {
-                if (element.poolModel != null) {
-                  logInfo('Pool is in intial state....');
+            ..stream.forEach(
+              (element) {
+                if (element is CreatePoolInitial) {
+                  if (element.poolModel != null) {
+                    logInfo('Pool is in intial state....');
+                  }
                 }
-              }
-            }),
-        )
+              },
+            ),
+        ),
+        BlocProvider<JoinCubit>(
+          create: (context) => JoinCubit(locator.get())
+            ..stream.forEach(
+              (element) {
+                if (element is JoinInitial) {
+                  if (element.r != null) {
+                    logInfo('Join is in intial state....');
+                  }
+                }
+              },
+            ),
+        ),
       ],
       child: MaterialApp.router(
         theme: ThemeData(

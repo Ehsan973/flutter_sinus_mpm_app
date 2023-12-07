@@ -4,7 +4,14 @@ class PoolModel {
   String? name;
   String? description;
   String? id;
-  PoolModel({this.id, this.creator, this.status, this.name, this.description});
+  int? amount;
+  PoolModel(
+      {this.id,
+      this.creator,
+      this.status,
+      this.name,
+      this.description,
+      this.amount});
 
   PoolModel.fromJson(Map<String, dynamic> json) {
     if (json["creator"] is String) {
@@ -21,6 +28,10 @@ class PoolModel {
     }
     if (json['id'] is String) {
       id = json['id'];
+    }
+    if(json['amount'] is int) {
+     amount = json['amount']; 
+
     }
   }
 

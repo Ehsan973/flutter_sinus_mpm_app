@@ -141,8 +141,7 @@ class NavBarItem extends StatelessWidget {
         Text(
           label,
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: color,
-              ),
+              color: color, fontSize: 10, fontWeight: FontWeight.w900),
         )
       ],
     );

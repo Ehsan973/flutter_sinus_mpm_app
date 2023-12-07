@@ -21,6 +21,7 @@ class CreatePoolCubit extends Cubit<CreatePoolState> {
   final IPoolRepo iPoolRepo;
   UserModel? lastUser;
   PoolModel? poolModel;
+  String? currentUserIdIdentify;
   CreatePoolCubit(this.iPoolRepo) : super(CreatePoolInitial());
 
   Future<void> getCurrentUserQrCodeData() async {
@@ -28,11 +29,12 @@ class CreatePoolCubit extends Cubit<CreatePoolState> {
 
     final currentUserId =
         locator.get<SharedPreferences>().getString(usernameKey);
+    currentUserIdIdentify = currentUserId;
     emit(
       CreatePoolInitial(
           lastCreatedUser: lastUser,
           poolModel: poolModel,
-          currentUserUserName: currentUserId),
+          currentUserUserName: currentUserIdIdentify),
     );
   }
 
@@ -46,7 +48,10 @@ class CreatePoolCubit extends Cubit<CreatePoolState> {
       (l) => emit(CreatePoolError(l)),
       (r) {
         emit(
-          CreatePoolInitial(lastCreatedUser: lastUser, poolModel: poolModel),
+          CreatePoolInitial(
+              lastCreatedUser: lastUser,
+              poolModel: poolModel,
+              currentUserUserName: currentUserIdIdentify),
         );
       },
     );
@@ -62,7 +67,8 @@ class CreatePoolCubit extends Cubit<CreatePoolState> {
       (r) {
         lastUser = r;
 
-        emit(CreatePoolInitial(lastCreatedUser: r));
+        emit(CreatePoolInitial(
+            lastCreatedUser: r, currentUserUserName: currentUserIdIdentify));
       },
     );
   }
@@ -82,7 +88,9 @@ class CreatePoolCubit extends Cubit<CreatePoolState> {
       );
       AppMessages.showToast(context, message: 'کاربر با موفقیت اضافه شد');
       emit(
-        CreatePoolInitial(lastCreatedUser: addedUsersList.last),
+        CreatePoolInitial(
+            lastCreatedUser: addedUsersList.last,
+            currentUserUserName: currentUserIdIdentify),
       );
     } else {
       AppMessages.showToast(context,
@@ -95,7 +103,11 @@ class CreatePoolCubit extends Cubit<CreatePoolState> {
 
     addedUsersList.remove(item);
 
-    emit(CreatePoolInitial());
+    emit(
+      CreatePoolInitial(
+          currentUserUserName: currentUserIdIdentify,
+          lastCreatedUser: addedUsersList.isEmpty ? null : addedUsersList.last),
+    );
   }
 
   Future<void> createNewPool() async {
@@ -106,7 +118,10 @@ class CreatePoolCubit extends Cubit<CreatePoolState> {
       (l) => emit(CreatePoolError(l)),
       (r) async {
         poolModel = r;
-        emit(CreatePoolInitial(lastCreatedUser: lastUser, poolModel: r));
+        emit(CreatePoolInitial(
+            lastCreatedUser: lastUser,
+            poolModel: r,
+            currentUserUserName: currentUserIdIdentify));
         await assignCurrentUsersToCurrentTransaction(r.id!);
       },
     );

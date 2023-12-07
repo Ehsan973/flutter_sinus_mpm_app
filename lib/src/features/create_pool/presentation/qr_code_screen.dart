@@ -9,6 +9,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:sinus_mpm_application/src/config/utils/logger.dart';
 import 'package:sinus_mpm_application/src/config/utils/messages.dart';
 import 'package:sinus_mpm_application/src/features/create_pool/cubit/create_pool_cubit.dart';
+import 'package:sinus_mpm_application/src/features/join_pool/cubit/join_cubit.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../../config/utils/text_seperator.dart';
@@ -16,11 +17,13 @@ import 'create_pool_screen.dart';
 
 @RoutePage()
 class QRViewScreen extends StatefulWidget {
+  final bool isForJoin;
   final Function(
     Barcode result,
   ) afterCompleteScan;
 
-  const QRViewScreen({Key? key, required this.afterCompleteScan})
+  const QRViewScreen(
+      {Key? key, required this.afterCompleteScan, this.isForJoin = false})
       : super(key: key);
 
   @override
@@ -61,95 +64,179 @@ class _QRViewScreenState extends State<QRViewScreen> {
         },
         controller: panelController,
         panel: Form(
-         
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: BlocBuilder<CreatePoolCubit, CreatePoolState>(
-                builder: (context, state) {
-                  if (state is CreatePoolLoading) {
-                    return CircularProgressIndicator();
-                  } else if (state is CreatePoolInitial) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ListTile(
-                          trailing: Text('نام کاربر'),
-                          leading: Text(state.lastCreatedUser != null
-                              ? state.lastCreatedUser!.name
-                              : 'نامشخص'),
-                        ),
-                        Spacer(),
-                        TextFormField(
-                          // key: formKey,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'لطفا مبلغی را وارد کنید';
-                            } else {
-                              return null;
-                            }
-                          },
-                          controller:
-                              context.read<CreatePoolCubit>().userAmount,
-                          textAlign: TextAlign.center,
-                          inputFormatters: [ThousandsSeparatorInputFormatter()],
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            suffixText: 'تومان',
-                            hintText: 'این کاربر قراره چقدر پرداخت کنه؟',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 14,
-                        ),
-                        Spacer(),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: FilledButton(
-                                onPressed: () {
-                                  // if ( formKey.currentState!.validate()) {
-                                  //   context
-                                  //       .read<CreatePoolCubit>()
-                                  //       .addCurrentUser(
-                                  //         state.lastCreatedUser!,
-                                  //       );
-                                  // }
-
-                                  context
-                                      .read<CreatePoolCubit>()
-                                      .addCurrentUser(
-                                          state.lastCreatedUser!, context);
-                                  panelController.hide();
-                                  context.popRoute();
-
-                                },
-                                child: Text('تایید و اضافه کردن'),
+              child: !widget.isForJoin
+                  ? BlocBuilder<CreatePoolCubit, CreatePoolState>(
+                      builder: (context, state) {
+                        if (state is CreatePoolLoading) {
+                          return const CircularProgressIndicator();
+                        } else if (state is CreatePoolInitial) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ListTile(
+                                trailing: const Text('نام کاربر'),
+                                leading: Text(state.lastCreatedUser != null
+                                    ? state.lastCreatedUser!.name
+                                    : 'نامشخص'),
                               ),
-                            ),
-                          ],
-                        ),
-                        Row(
+                              const Spacer(),
+                              TextFormField(
+                                // key: formKey,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'لطفا مبلغی را وارد کنید';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                controller:
+                                    context.read<CreatePoolCubit>().userAmount,
+                                textAlign: TextAlign.center,
+                                inputFormatters: [
+                                  ThousandsSeparatorInputFormatter()
+                                ],
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  suffixText: 'تومان',
+                                  hintText: 'این کاربر قراره چقدر پرداخت کنه؟',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: FilledButton(
+                                      onPressed: () {
+                                        // if ( formKey.currentState!.validate()) {
+                                        //   context
+                                        //       .read<CreatePoolCubit>()
+                                        //       .addCurrentUser(
+                                        //         state.lastCreatedUser!,
+                                        //       );
+                                        // }
+
+                                        context
+                                            .read<CreatePoolCubit>()
+                                            .addCurrentUser(
+                                                state.lastCreatedUser!,
+                                                context);
+                                        panelController.hide();
+                                        context.popRoute();
+                                      },
+                                      child: const Text('تایید و اضافه کردن'),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: OutlinedButton(
+                                        onPressed: () {
+                                          panelController.close();
+                                          context.popRoute();
+                                        },
+                                        child: const Text('لغو')),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        } else {
+                          //TODO implement error state for this section. no time .
+                          return const SizedBox();
+                        }
+                      },
+                    )
+                  : BlocBuilder<JoinCubit, JoinState>(
+                      builder: (context, state) {
+                      if (state is JoinLoading) {
+                        return const CircularProgressIndicator();
+                      } else if (state is JoinInitial && state.r != null) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(
-                              child: OutlinedButton(
-                                  onPressed: () {
-                                    panelController.close();
-                                    context.popRoute();
-                                  },
-                                  child: Text('لغو')),
+                            ListTile(
+                              trailing: const Text('نام کاربر'),
+                              leading: Text(state.r!.name!),
                             ),
+                            const Spacer(),
+                            Text('مبلغ : ${state.r!.amount}'),
+                            const Spacer(),
+                            if (state.isUpdated)
+                              Column(
+                                children: [
+                                  const Text(
+                                    'از شنا کردن لذت ببرید',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: OutlinedButton(
+                                            onPressed: () {
+                                              panelController.close();
+                                              context.popRoute();
+                                            },
+                                            child: const Text('تمام')),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            if (!state.isUpdated)
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: FilledButton(
+                                      onPressed: () {
+                                        // if ( formKey.currentState!.validate()) {
+                                        //   context
+                                        //       .read<CreatePoolCubit>()
+                                        //       .addCurrentUser(
+                                        //         state.lastCreatedUser!,
+                                        //       );
+                                        // }
+
+                                        context
+                                            .read<JoinCubit>()
+                                            .updateUserPool(
+                                                state.r!.id!, 'final');
+                                      },
+                                      child: const Text('تایید و اضافه کردن'),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            if (!state.isUpdated)
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: OutlinedButton(
+                                        onPressed: () {
+                                          panelController.close();
+                                          context.popRoute();
+                                        },
+                                        child: const Text('لغو')),
+                                  ),
+                                ],
+                              ),
                           ],
-                        ),
-                      ],
-                    );
-                  } else {
-                    //TODO implement error state for this section. no time .
-                    return SizedBox();
-                  }
-                },
-              ),
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    }),
             ),
           ),
         ),
@@ -163,7 +250,7 @@ class _QRViewScreenState extends State<QRViewScreen> {
                     left: 28,
                     top: 28,
                     child: IconButton.filledTonal(
-                      icon: Icon(Icons.close),
+                      icon: const Icon(Icons.close),
                       onPressed: () {
                         context.popRoute();
                       },
@@ -180,8 +267,8 @@ class _QRViewScreenState extends State<QRViewScreen> {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
             MediaQuery.of(context).size.height < 400)
-        ? 150.0
-        : 300.0;
+        ? 300.0
+        : 500.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
     return BlocBuilder<CreatePoolCubit, CreatePoolState>(
@@ -209,7 +296,13 @@ class _QRViewScreenState extends State<QRViewScreen> {
       logSuccess('msg');
       if (this.scanData != scanData.code) {
         logSuccess('========== >>>Show btmsheet <<<< =========');
-        context.read<CreatePoolCubit>().getUserInfoByUsername(scanData.code!);
+        !widget.isForJoin
+            ? context
+                .read<CreatePoolCubit>()
+                .getUserInfoByUsername(scanData.code!)
+            : context
+                .read<JoinCubit>()
+                .getCurrentTransactionInformationForJoin(scanData.code!);
         panelController.open();
 
         setState(() {

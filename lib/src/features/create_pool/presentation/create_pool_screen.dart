@@ -18,20 +18,6 @@ class CreatePoolScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        floatingActionButton: BlocBuilder<CreatePoolCubit, CreatePoolState>(
-          builder: (context, state) {
-            if (state is CreatePoolInitial && state.lastCreatedUser != null) {
-              return FloatingActionButton.extended(
-                  label: const Text('ایجاد استخر'),
-                  onPressed: () async {
-                    logInfo('Last created user is not null ');
-                    context.read<CreatePoolCubit>().createNewPool();
-                  });
-            } else {
-              return const SizedBox();
-            }
-          },
-        ),
         appBar: AppBar(
           title: const Text(
             'ایجاد استخر جدید',
@@ -46,7 +32,7 @@ class CreatePoolScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Padding(
-                  padding: EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(24.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -100,6 +86,32 @@ class CreatePoolScreen extends StatelessWidget {
                     }
                   },
                 ),
+                const SizedBox(
+                  height: 8,
+                ),
+                BlocBuilder<CreatePoolCubit, CreatePoolState>(
+                  builder: (context, state) {
+                    if (state is CreatePoolInitial &&
+                        state.lastCreatedUser != null &&
+                        state.poolModel == null) {
+                      return FloatingActionButton.extended(
+                          label: const Row(
+                            children: [
+                              Text('ایجاد استخر'),
+                            ],
+                          ),
+                          onPressed: () async {
+                            logInfo('Last created user is not null ');
+                            context.read<CreatePoolCubit>().createNewPool();
+                          });
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 80,
+                ),
               ],
             ),
           ),
@@ -129,6 +141,7 @@ class AddedUsersList extends StatelessWidget {
                 final item = bloc.addedUsersList[index];
                 return Container(
                   height: 71,
+                  margin: const EdgeInsets.symmetric(vertical: 4),
                   decoration: BoxDecoration(
                     border: Border.all(),
                   ),
@@ -138,7 +151,9 @@ class AddedUsersList extends StatelessWidget {
                         const SizedBox(
                           width: 8,
                         ),
-                        const CircleAvatar(),
+                        CircleAvatar(
+                          child: Text(item.name.characters.first.toUpperCase()),
+                        ),
                         Text(item.name),
                         Text(
                           item.amount!.formatNumberWithComma(),

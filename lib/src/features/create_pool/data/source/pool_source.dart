@@ -31,6 +31,10 @@ abstract class IPoolDataSource {
   Future<UserModel> getUserInfoByUsername(String username);
   Future<PoolModel> createNewPool();
   Future<String> assignPoolMd(List<UserModel> userModels, String transactionId);
+  Future<PoolModel> getRelevantTrannsactionPoolInformation(
+      String transactionId);
+
+  Future<String> updateUserPool(String id, String status);
 }
 
 class RemotePoolSource implements IPoolDataSource {
@@ -83,12 +87,39 @@ class RemotePoolSource implements IPoolDataSource {
           'Assigning ${element.name} to trnsaction with id $transactionId');
       await _pb.collection('user_pools').create(body: {
         "user_id": element.username,
-        "transaction_id": transactionId,
+        "pool_id": transactionId,
         "amount": element.amount,
         "status": "pending"
       });
     });
 
+    return 'success';
+  }
+
+  @override
+  Future<PoolModel> getRelevantTrannsactionPoolInformation(
+      String transactionId) async {
+    final currentUserId = await AuthProvider().getUsername();
+
+    final result = await _pb.collection("user_pools").getFirstListItem('',
+        expand: 'pool_id',
+        query: {"user_id": currentUserId, "pool_id": transactionId});
+
+    final response = await getUserInfoByUsername(
+      result.expand.entries.first.value.first.data['creator'],
+    );
+
+    return PoolModel(
+        id: result.id,
+        creator: result.expand.entries.first.value.first.data['creator'],
+        description: result.data['description'],
+        amount: result.data['amount'],
+        name: response.name);
+  }
+
+  @override
+  Future<String> updateUserPool(String id, String status) async {
+    await _pb.collection('user_pools').update(id, body: {"status": status});
     return 'success';
   }
 }
