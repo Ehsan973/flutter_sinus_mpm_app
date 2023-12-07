@@ -35,7 +35,7 @@ class _AppState extends State<App> with TickerProviderStateMixin {
         locale: Locale('fa', 'IR'),
         debugShowCheckedModeBanner: false,
         routerDelegate: App.appRouter.delegate(
-            // reevaluateListenable: App.authProvider,
+            reevaluateListenable: App.authProvider,
             ),
         routeInformationParser: App.appRouter.defaultRouteParser(),
       ),

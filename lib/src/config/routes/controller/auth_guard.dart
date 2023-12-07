@@ -7,7 +7,7 @@ mixin AuthState {
   Future checkAuth(String path) async => await App.authProvider.checkAuth(path);
   bool get isLoggedIn => App.authProvider.isLoggedIn;
   bool isLoginRoute(NavigationResolver _) => _.route.name == LoginRoute.name;
-  Future logOut()=> App.authProvider.logoutuUser() ;
+  Future logOut() async => await App.authProvider.logoutuUser() ;
 
 
 }

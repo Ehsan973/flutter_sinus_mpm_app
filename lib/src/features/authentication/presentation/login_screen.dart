@@ -31,7 +31,18 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthBloc(),
+      create: (context) => AuthBloc()
+        ..stream.forEach((element) async {
+          if (element is AuthResponse) {
+            final right = element.responseEither.fold((l) => 'null', (r) => r);
+            if (right != 'null') {
+              widget.onResult(true);
+              await App.authProvider.loginUser(
+                AuthModel(token: right),
+              );
+            }
+          }
+        }),
       child: Scaffold(
         body: SafeArea(
           child: Padding(
@@ -164,10 +175,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         (token) {
-                          widget.onResult(true);
-                          App.authProvider.loginUser(
-                            AuthModel(token: token),
-                          );
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 32),
                             child: ElevatedButton(

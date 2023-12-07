@@ -10,9 +10,8 @@ import 'package:sinus_mpm_application/src/features/profile/presentation/transact
 class ProfileScreen extends StatelessWidget with AuthState {
   const ProfileScreen({super.key});
 
-  @override 
+  @override
   Widget build(BuildContext context) {
- 
     return Scaffold(
       body: Center(
         child: Column(
@@ -60,12 +59,13 @@ class ProfileScreen extends StatelessWidget with AuthState {
             ),
             const Spacer(),
             ListTile(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) {
-                    return const AddWalletScreen();
-                  },
-                ));
+              onTap: () async {
+                // Navigator.of(context).push(MaterialPageRoute(
+                //   builder: (context) {
+                //     return const AddWalletScreen();
+                //   },
+                // ));
+                await logOut();
               },
               trailing: const Text("خروج از حسا کابری"),
               leading: const Icon(Icons.logout),
@@ -73,7 +73,6 @@ class ProfileScreen extends StatelessWidget with AuthState {
             const SizedBox(
               height: 150,
             ),
- 
           ],
         ),
       ),
