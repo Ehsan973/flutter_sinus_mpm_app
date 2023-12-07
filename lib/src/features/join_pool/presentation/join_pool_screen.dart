@@ -27,10 +27,19 @@ class _JoinPoolScreenState extends State<JoinPoolScreen> {
         builder: (context, state) {
           if (state is CreatePoolInitial && state.currentUserUserName != null) {
             return Center(
-              child: QrImageView(
-                data: state.currentUserUserName!,
-                version: QrVersions.auto,
-                size: 200.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  QrImageView(
+                    data: state.currentUserUserName!,
+                    version: QrVersions.auto,
+                    size: 200.0,
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  
+                ],
               ),
             );
           } else {
