@@ -189,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       BorderRadius.all(Radius.circular(4)),
                                 ),
                               ),
-                              child: Row(
+                              child: Wrap(
                                 children: [
                                   Text(
                                     token,
