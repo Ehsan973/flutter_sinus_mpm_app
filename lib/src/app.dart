@@ -52,6 +52,7 @@ class _AppState extends State<App> with TickerProviderStateMixin {
       ],
       child: MaterialApp.router(
         theme: ThemeData(
+          textTheme: const TextTheme(titleLarge: TextStyle(fontSize: 16)),
           buttonTheme: ButtonThemeData(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
