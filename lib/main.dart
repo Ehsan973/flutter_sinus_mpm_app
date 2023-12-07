@@ -9,7 +9,6 @@ void main() async {
   // }
   await configureDi();
   // await initMapSettings();
-  
+
   runApp(const App());
 }
- 

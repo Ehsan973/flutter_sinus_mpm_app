@@ -6,6 +6,36 @@ class TransactionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Center(
+          child: SizedBox(
+            height: 500,
+            child: ListView.builder(
+              itemCount: 5,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  width: MediaQuery.of(context).size.width,
+                  child: const Row(
+                    children: [
+                      Text("تاریخ تراکمش"),
+                      Spacer(),
+                      Text("مبلغ"),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text("وضعیت"),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
