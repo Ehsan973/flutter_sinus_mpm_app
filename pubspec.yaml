@@ -97,7 +97,16 @@ flutter:
     - family: Sahel
       fonts:
         - asset: assets/fonts/Sahel-FD.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+          weight: 400
+        - asset: assets/fonts/Sahel-Light-FD.ttf
+          weight: 300
+        - asset: assets/fonts/Sahel-Bold-FD.ttf
+          weight: 500
+        - asset: assets/fonts/Sahel-SemiBold-FD.ttf
+          weight: 600
+        - asset: assets/fonts/Sahel-Black-FD.ttf
+          weight: 700
+        
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:
