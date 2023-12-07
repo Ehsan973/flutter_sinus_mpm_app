@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sinus_mpm_application/src/config/constants/constants.dart';
 import 'package:sinus_mpm_application/src/config/routes/routes.dart';
+import 'package:sinus_mpm_application/src/config/utils/messages.dart';
 import 'package:sinus_mpm_application/src/features/authentication/data/bloc/bloc/auth_bloc.dart';
 import 'package:sinus_mpm_application/src/features/authentication/data/models/request_json_data_model.dart';
 import 'package:sinus_mpm_application/src/features/authentication/presentation/login_screen.dart';
@@ -30,7 +31,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthBloc(),
+      create: (context) => AuthBloc()
+        ..stream.forEach((element) async {
+          if (element is AuthResponse) {
+            final right = element.responseEither.fold((l) => 'null', (r) => r);
+            if (right != 'null') {
+              AppMessages.showToast(context, message: 'ثبت نام انجام شد');
+              context.router.push(LoginRoute(onResult: (_) {}));
+            }
+          }
+        }),
       child: Scaffold(
           body: SafeArea(
         child: Padding(
@@ -159,24 +169,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                       ),
-                      (r) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 32),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 50),
-                            backgroundColor: CustomColors.primaryColor,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4)),
+                      (r) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 32),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: const Size(double.infinity, 50),
+                              backgroundColor: CustomColors.primaryColor,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(4)),
+                              ),
+                            ),
+                            child: Text(
+                              r,
+                              style: const TextStyle(color: Colors.white),
                             ),
                           ),
-                          child: Text(
-                            r,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   }
                 ],
