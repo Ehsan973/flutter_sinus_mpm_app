@@ -150,7 +150,7 @@ class ProfileScreen extends StatelessWidget with AuthState {
                       child: Container(
                         width: 70,
                         height: 70,
-                        margin: EdgeInsets.all(4),
+                        margin: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
@@ -166,18 +166,7 @@ class ProfileScreen extends StatelessWidget with AuthState {
                       ),
                     ),
                     const SizedBox(
-                      height: 18,
-                    ),
-                    const Text(
-                      "انتخاب عکس پروفایل",
-                      style: TextStyle(
-                        color: Color(0xff1D43A6),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 24,
+                      height: 12,
                     ),
                     const Text(
                       "مهدی قیصری",
@@ -186,6 +175,7 @@ class ProfileScreen extends StatelessWidget with AuthState {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    const Text('mmgheys@'),
                     const SizedBox(
                       height: 40,
                     ),
@@ -372,7 +362,7 @@ class ProfileScreen extends StatelessWidget with AuthState {
                       ),
                     ),
                     const SizedBox(
-                      height: 150,
+                      height: 50,
                     ),
                   ],
                 ),
