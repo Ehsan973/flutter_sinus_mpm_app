@@ -49,6 +49,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ProfileScreen(),
       );
     },
+    QRViewRoute.name: (routeData) {
+      final args = routeData.argsAs<QRViewRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: QRViewScreen(
+          key: args.key,
+          afterCompleteScan: args.afterCompleteScan,
+        ),
+      );
+    },
     RootRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -161,6 +171,43 @@ class ProfileRoute extends PageRouteInfo<void> {
   static const String name = 'ProfileRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [QRViewScreen]
+class QRViewRoute extends PageRouteInfo<QRViewRouteArgs> {
+  QRViewRoute({
+    Key? key,
+    required dynamic Function(Barcode) afterCompleteScan,
+    List<PageRouteInfo>? children,
+  }) : super(
+          QRViewRoute.name,
+          args: QRViewRouteArgs(
+            key: key,
+            afterCompleteScan: afterCompleteScan,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'QRViewRoute';
+
+  static const PageInfo<QRViewRouteArgs> page = PageInfo<QRViewRouteArgs>(name);
+}
+
+class QRViewRouteArgs {
+  const QRViewRouteArgs({
+    this.key,
+    required this.afterCompleteScan,
+  });
+
+  final Key? key;
+
+  final dynamic Function(Barcode) afterCompleteScan;
+
+  @override
+  String toString() {
+    return 'QRViewRouteArgs{key: $key, afterCompleteScan: $afterCompleteScan}';
+  }
 }
 
 /// generated route for
