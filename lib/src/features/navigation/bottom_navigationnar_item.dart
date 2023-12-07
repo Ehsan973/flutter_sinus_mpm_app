@@ -60,7 +60,7 @@ class BottomNavigationBarCustomItem extends StatelessWidget {
             ),
             AnimatedPositioned(
               duration: const Duration(milliseconds: 425),
-              bottom: !isSelected ? -44 * 2 : -44 / 2 - 6,
+              bottom: !isSelected ? -44 : 0,
               left: 0,
               right: 0,
               key: key,
@@ -70,7 +70,7 @@ class BottomNavigationBarCustomItem extends StatelessWidget {
                   milliseconds: 200,
                 ),
                 width: 44,
-                height: 44,
+                height: 14,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Theme.of(context).colorScheme.primary,

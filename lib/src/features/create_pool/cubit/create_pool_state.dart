@@ -4,15 +4,14 @@ part of 'create_pool_cubit.dart';
 abstract class CreatePoolState {}
 
 class CreatePoolInitial extends CreatePoolState {
-
   final UserModel? lastCreatedUser;
-
-  CreatePoolInitial({this.lastCreatedUser});
-
+  final PoolModel? poolModel;
+ final  String? currentUserUserName;
+  CreatePoolInitial(
+      {this.lastCreatedUser, this.poolModel, this.currentUserUserName});
 }
 
 class CreatePoolLoading extends CreatePoolState {}
-
 
 class CreatePoolError extends CreatePoolState {
   final String errorMessage;

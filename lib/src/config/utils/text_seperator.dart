@@ -46,3 +46,16 @@ class ThousandsSeparatorInputFormatter extends TextInputFormatter {
     return newValue;
   }
 }
+
+
+
+extension NumberFormatter on int? {
+// A method to return a string representation of the number with separators according to the locale
+  String formatNumberWithComma() {
+// Create a NumberFormat object with the given locale
+    NumberFormat formatter = NumberFormat('#,##0', "en_US");
+// Return the formatted string
+    return formatter.format(this);
+  }
+}
+
