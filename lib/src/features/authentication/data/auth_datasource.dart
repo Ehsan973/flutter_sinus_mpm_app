@@ -4,6 +4,7 @@ import 'package:sinus_mpm_application/src/features/authentication/data/models/re
 
 abstract class IAuthDatasource {
   Future<void> register(RequestJsonDataModel jsonModel);
+  Future<String> login(RequestJsonDataModel jsonDataModel);
 }
 
 class AuthRemoteDatasource extends IAuthDatasource {
@@ -18,5 +19,14 @@ class AuthRemoteDatasource extends IAuthDatasource {
     };
 
     final record = await _pb.collection('users').create(body: body);
+  }
+
+  @override
+  Future<String> login(RequestJsonDataModel jsonDataModel) async {
+    var authData = await _pb.collection('users').authWithPassword(
+          jsonDataModel.username,
+          jsonDataModel.password,
+        );
+    return authData.token;
   }
 }

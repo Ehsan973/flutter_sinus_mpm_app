@@ -16,5 +16,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       var responseEither = await _repository.register(event.model);
       emit(AuthResponse(responseEither));
     });
+
+    on<AuthLoginRequest>((event, emit) async {
+      emit(AuthLoading());
+      var responseEither = await _repository.login(event.model);
+      emit(AuthResponse(responseEither));
+    });
+
+    on<AuthInitialize>((event, emit) {
+      emit(AuthInitial());
+    });
   }
 }
