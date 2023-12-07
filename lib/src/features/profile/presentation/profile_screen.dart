@@ -8,7 +8,7 @@ import 'package:sinus_mpm_application/src/config/routes/controller/auth_guard.da
 class ProfileScreen extends StatelessWidget with AuthState {
   const ProfileScreen({super.key});
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return Center(
       child: Center(
