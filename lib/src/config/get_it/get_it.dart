@@ -12,7 +12,7 @@ Future<void> configureDi() async {
   locator.registerSingleton<SharedPreferences>(
     await SharedPreferences.getInstance(),
   );
-  locator.registerLazySingleton(() => PocketBase('192.168.8.249:8090/_/'));
+  locator.registerLazySingleton(() => PocketBase('http://192.168.8.249:8090/_/'));
   locator.registerLazySingleton<IPoolRepo>(() => PoolRepo(RemotePoolSource()));
   locator.registerLazySingleton<IAuthRepository>(() => AuthRepository());
   locator.registerLazySingleton<IAuthDatasource>(() => AuthRemoteDatasource());
