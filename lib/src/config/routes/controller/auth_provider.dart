@@ -35,6 +35,11 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  /// Get current user, usernames.
+  Future<String> getUsername() async {
+    return locator.get<SharedPreferences>().getString(usernameKey) ?? '_';
+  }
+
   Future<void> logoutuUser() async {
     await locator.get<SharedPreferences>().clear();
     logout();

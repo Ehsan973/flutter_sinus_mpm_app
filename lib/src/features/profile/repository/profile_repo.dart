@@ -10,5 +10,7 @@ class ProfileRepository extends IProfileRepository {
   final IProfileRepository _datasource = locator.get();
 
   @override
-  Future<Either<String, String>> getAddWallet() {}
+  Future<Either<String, String>> getAddWallet() async {
+    return const Right('');
+  }
 }

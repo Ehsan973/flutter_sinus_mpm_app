@@ -1,4 +1,7 @@
+
 import 'package:pocketbase/pocketbase.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sinus_mpm_application/src/config/constants/keys.dart';
 import 'package:sinus_mpm_application/src/config/get_it/get_it.dart';
 import 'package:sinus_mpm_application/src/features/authentication/data/models/request_json_data_model.dart';
 
@@ -19,6 +22,7 @@ class AuthRemoteDatasource extends IAuthDatasource {
     };
 
     final record = await _pb.collection('users').create(body: body);
+    await locator.get<SharedPreferences>().setString(usernameKey, record.id);
   }
 
   @override
@@ -27,6 +31,9 @@ class AuthRemoteDatasource extends IAuthDatasource {
           jsonDataModel.username,
           jsonDataModel.password,
         );
+    await locator
+        .get<SharedPreferences>()
+        .setString(usernameKey, authData.record!.id);
     return authData.token;
   }
 }
