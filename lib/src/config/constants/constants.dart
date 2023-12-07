@@ -7,3 +7,5 @@ class CustomColors {
   static const redColor = Color(0xFFE85050);
   static const isArabic = true;
 }
+
+

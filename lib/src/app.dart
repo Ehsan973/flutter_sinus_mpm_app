@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sinus_mpm_application/src/config/constants/keys.dart';
 import 'package:sinus_mpm_application/src/config/get_it/get_it.dart';
 import 'package:sinus_mpm_application/src/config/routes/controller/auth_provider.dart';
 import 'package:sinus_mpm_application/src/config/routes/routes.dart';
@@ -27,8 +28,11 @@ class _AppState extends State<App> with TickerProviderStateMixin {
         )
       ],
       child: MaterialApp.router(
-        theme: ThemeData.light(useMaterial3: true ),
-        locale: Locale('fa','IR'),
+        theme: ThemeData(
+          useMaterial3: true,
+          fontFamily: ff,
+        ),
+        locale: Locale('fa', 'IR'),
         debugShowCheckedModeBanner: false,
         routerDelegate: App.appRouter.delegate(
             // reevaluateListenable: App.authProvider,
