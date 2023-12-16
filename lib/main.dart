@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sinus_mpm_application/src/features/authentication/presentation/login_screen.dart';
+import 'package:sinus_mpm_application/src/app.dart';
+import 'package:sinus_mpm_application/src/config/get_it/get_it.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // if (kIsWeb) {
+  //   usePathUrlStrategy();
+  // }
+  await configureDi();
+  // await initMapSettings();
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const LoginScreen(),
-    );
-  }
+  runApp(const App());
 }
